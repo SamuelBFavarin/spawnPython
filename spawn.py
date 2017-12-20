@@ -12,17 +12,30 @@ driver = webdriver.Chrome('C:/Program Files (x86)/chrome-win32/chromedriver')
 driver.get("https://web.whatsapp.com/")
 wait = WebDriverWait(driver, 600)
 
+
 def sendAutomatic():
-	# vetor com os nomes dos contatos
-	contacts = ['BUG DO MILÊNIO', 'Robert Metzler']
-	messages = ['*Olá, boa tarde!!!*','Obrigado por estar conosco, te espero ano que vem!!!','*Feliz natal e boas Festas*', '_Não esqueça de responder nossa pesquisa_', 'https://goo.gl/forms/vW7CdRGJWoTdvi1C3','_RISEUP VENHA SER EXCLUSIVO!!!_']
+	# recebe contatos do arquivo
+
+
+	with open('contacts.txt', 'r') as arq:
+		contacts = arq.read().splitlines()
+
+	# recebe mensagens do arquivo
+	with open('messages.txt', 'r') as arq:
+		messages = arq.read().splitlines()	
+	
 	count = 1
+	i =0;
 	input('Aperte enter se já foi escaneado o QR code')
+
 	for name in contacts:
-		time.sleep(1)
 		for message in messages:
-			time.sleep(1)
-			sender(name,message,count)
+			if(i == 0):
+				senderNewMessage(name,message,count)
+			else:
+				sender(name,message,count)
+			i = i+1
+		i = 0
 
 def sendManual():
 	name = input('Digite o nome do usuário ou do grupo : ')
