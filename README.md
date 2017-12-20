@@ -3,7 +3,11 @@
 Sistema de envio de mensagem automática via Whatsapp WEB. Desenvolvido com Python e biblioteca Selenium.
 Utiliza-se o navegador Chromium e seu driver.
 
-Baseado no seguinte projeto de [umangahuja1](https://github.com/umangahuja1/Scripting-and-Web-Scraping/blob/master/Whatsapp/message.py)
+Baseado no projeto de [umangahuja1](https://github.com/umangahuja1/Scripting-and-Web-Scraping/blob/master/Whatsapp/message.py)
+
+# Instalação
+
+Segue abaixo o ambiente necessário para execução do programa.
 
 ### Instalação do Python
   
