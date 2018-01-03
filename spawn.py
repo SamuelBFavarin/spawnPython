@@ -12,7 +12,7 @@ from selenium.webdriver import ActionChains
 import time
 
 #path for chrome driver
-driver = webdriver.Chrome('C:/Program Files (x86)/chrome-win32/chromedriver') 
+driver = webdriver.Chrome('chromedriver') 
 #link of Whatsapp Web
 driver.get("https://web.whatsapp.com/")
 wait = WebDriverWait(driver, 600)
@@ -67,8 +67,8 @@ def senderNewMessage(name,msg,count):
 	pesquisaContato.send_keys(name)
 	
 	# get contact card and enter in chat
+	time.sleep(2)
 	user = driver.find_element_by_xpath('//span[@title = "{}"]'.format(name))
-	time.sleep(1)
 	user.click()
 
 	# send message in number of repetition line message
