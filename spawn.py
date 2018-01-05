@@ -2,6 +2,13 @@
 # GitHub: @SamuelBFavarin
 # AUTOMATIC WHATSAPP MESSENGER SENDER
 # Language: Python
+#
+# Functions:
+# send messages with text and images
+# for send automatic you need:
+#	-> insert the contacts in contacts.txt
+#	-> insert the message in messages.txt
+#	-> insert the image path in pathImage.txt
 
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -13,15 +20,15 @@ from selenium.common.exceptions import NoSuchElementException
 import os
 import time
 
-#path for chrome driver
+# Path for chrome driver
 driver = webdriver.Chrome('chromedriver')
-#link of Whatsapp Web
+# Open Whatsapp Web
 driver.get("https://web.whatsapp.com/")
 wait = WebDriverWait(driver, 600)
 
-#Send message automatic from text files content contacts and messages
+# Send message automatic from text files content contacts and messages
 def sendAutomatic():
-	#flagContact
+	# flagContact
 	emptyContact = False
 
 	# get contacts
@@ -49,6 +56,7 @@ def sendAutomatic():
 			else:
 				emptyContact = sender(name,message,count)
 			i = i+1
+		# test if exist image and contact
 		if (fileEmpty('pathImage.txt') == False and emptyContact == False):
 			sendImage(url)
 		i = 0
@@ -56,9 +64,9 @@ def sendAutomatic():
 
 #send manual message, input is contact name, message, repetition message in line, row number for repetition
 def sendManual():
-	name = input('Digite o nome do usuário ou do grupo : ')
-	msg = input('Digite a mensagem : ')
-	count = int(input('Digite o número de vezes que a mensagem deve repetir na linha : '))
+	name = input('Digite o nome do usuário ou do grupo: ')
+	msg = input('Digite a mensagem: ')
+	count = int(input('Digite o número de vezes que a mensagem deve repetir na linha: '))
 	repeat = int(input('Digite o número de linhas: '))
 
 	#get images
@@ -75,6 +83,7 @@ def sendManual():
 			senderNewMessage(name,msg,count)
 		else:
 			sender(name,msg,count)
+		# test if exist image for send
 		if (fileEmpty('pathImage.txt') == False):
 			sendImage(url)
 
@@ -84,6 +93,7 @@ def senderNewMessage(name,msg,count):
 	# get input for contacts and insert contact name in input
 	pesquisaContato = driver.find_element_by_id('input-chatlist-search')
 	pesquisaContato.send_keys(name)
+	#try do send messa for contact
 	try:
 		# get contact card and enter in chat
 		time.sleep(2)
@@ -95,6 +105,7 @@ def senderNewMessage(name,msg,count):
 			msg_box.send_keys(msg)
 		driver.find_element_by_class_name('compose-btn-send').click()
 		return False
+	# if contact not found
 	except NoSuchElementException:
 		print("Contato não encontrado.")
 		driver.find_element_by_xpath('//*[@id="side"]/div[2]/div/button').click()
@@ -103,6 +114,7 @@ def senderNewMessage(name,msg,count):
 # send message when chat is open
 def sender(name,msg,count):
 	# for prevention get card element again end enter in chat
+	# try send message for contact
 	try:
 		user = driver.find_element_by_xpath('//span[@title = "{}"]'.format(name))
 		time.sleep(0.5)
@@ -113,11 +125,12 @@ def sender(name,msg,count):
 			msg_box.send_keys(msg)
 		driver.find_element_by_class_name('compose-btn-send').click()
 		return False
+	# if contact not found
 	except NoSuchElementException:
 		print("Contato não encontrado.")
 		return True
 
-# send image message
+# send image message from path
 def sendImage(path):
         pathImage = path
         driver.find_element_by_xpath('//*[@id="main"]/header/div[3]/div/div[2]').click()
@@ -132,7 +145,7 @@ def sendImage(path):
 def fileEmpty(path):
     return os.stat(path).st_size==0
 
-# main
+# Main Menu
 repetir = True
 while (repetir == True):
 	opcao = input('Você deseja que o envio seja Automático ou Manual? (A/M): ')
